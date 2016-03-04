@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeLite_Workspace Name="qpbo" Database="">
+  <Project Name="jnicpbo" Path="jnicpbo/jnicpbo.project" Active="Yes"/>
+  <BuildMatrix>
+    <WorkspaceConfiguration Name="Debug" Selected="yes">
+      <Environment/>
+      <Project Name="jnicpbo" ConfigName="Debug"/>
+      <Project Name="libqpbosolver" ConfigName="Debug"/>
+    </WorkspaceConfiguration>
+    <WorkspaceConfiguration Name="Release" Selected="no">
+      <Environment/>
+      <Project Name="jnicpbo" ConfigName="Release"/>
+      <Project Name="libqpbosolver" ConfigName="Release"/>
+    </WorkspaceConfiguration>
+  </BuildMatrix>
+</CodeLite_Workspace>
