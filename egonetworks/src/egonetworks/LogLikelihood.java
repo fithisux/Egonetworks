@@ -97,7 +97,7 @@ public class LogLikelihood {
             term1 = phi;
         }
         term2 = Math.log(1 + Math.exp(phi));
-        return term1 - term2;
+        return -term1 + term2;
     }
 
     public double NakedLogLikelihood(Unknowns uknowns) {
