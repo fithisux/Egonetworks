@@ -34,20 +34,20 @@ import qpbosolver.QPBOSolution;
  */
 public class ProximalSolver {
 
-   
-
     public static class Objective implements Function<double[], Double> {
 
         public Double apply(double[] x) {
-            return ll.NakedLogLikelihood(unknowns.unzip(x)) + unknowns.getRegularization();
+            return ll.NakedLogLikelihood(unknowns.unzip(x)) + unknowns.getRegularization(this.lambda);
         }
 
         Unknowns unknowns;
         LogLikelihood ll;
+        double lambda;
 
-        public Objective(Unknowns unknowns, LogLikelihood ll) {
+        public Objective(Unknowns unknowns, LogLikelihood ll,double lambda) {
             this.unknowns = unknowns;
             this.ll = ll;
+            this.lambda=lambda;
         }
     }
 
@@ -84,11 +84,11 @@ public class ProximalSolver {
     }
     
     
-    public static Unknowns solve(Unknowns unknowns, LogLikelihood ll){
+    public static Unknowns solve(Unknowns unknowns, LogLikelihood ll,double lambda){
         double L=ll.getL(unknowns);
         Derivative derivative=new Derivative(unknowns,ll);
-        Objective objective=new Objective(unknowns,ll);
-        ProximalMethod pxm = new ProximalMethod(objective,derivative,unknowns.lambda,L);        
+        Objective objective=new Objective(unknowns,ll,lambda);
+        ProximalMethod pxm = new ProximalMethod(objective,derivative,lambda,L);        
         double [] ending=pxm.solve(unknowns.makeVector(), 0.01);        
         return unknowns.unzip(ending);
     }

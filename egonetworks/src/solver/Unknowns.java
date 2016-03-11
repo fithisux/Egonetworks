@@ -28,11 +28,10 @@ public class Unknowns {
     boolean[][] circles;
     double[][] tau;
     double[][] theta;
-    double lambda;
     
     private Unknowns(){}
 
-    public double getRegularization() {
+    public double getRegularization(double lambda) {
         double temp = 0;
         for (int k = 0; k < this.tau.length; k++) {
             for (int l = 0; l < this.tau[k].length; l++) {
@@ -41,7 +40,7 @@ public class Unknowns {
             }
         }
 
-        return this.lambda * temp;
+        return lambda * temp;
     }
 
     public int getK() {
@@ -60,14 +59,10 @@ public class Unknowns {
         return theta;
     }
 
-    public double getLambda() {
-        return lambda;
-    }
 
     public static Unknowns generateInitial(double lambda, int K, int nodes, int features) {
         //initialize cycle data randomly        
         Unknowns unknowns = new Unknowns();
-        unknowns.lambda = lambda;
         unknowns.tau = new double[K][features];
         unknowns.theta = new double[K][features];
         unknowns.circles = new boolean[K][nodes];
@@ -83,8 +78,7 @@ public class Unknowns {
     public Unknowns unzip(double [] params){
         
         Unknowns unknowns=new Unknowns();
-        unknowns.circles=this.circles;
-        unknowns.lambda=this.lambda;        
+        unknowns.circles=this.circles;      
         int index=0;
         
         for(int k=0;k<theta.length;k++){
@@ -120,9 +114,7 @@ public class Unknowns {
 
     public Unknowns modifiableCircles(){
         
-        Unknowns unknowns=new Unknowns();
-        
-        unknowns.lambda=this.lambda;        
+        Unknowns unknowns=new Unknowns();      
         unknowns.tau=this.tau;
         unknowns.theta=this.theta;
         

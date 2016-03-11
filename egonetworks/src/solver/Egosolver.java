@@ -29,12 +29,12 @@ public class Egosolver {
     public static Unknowns solve(LogLikelihood ll,double lambda, int K, double tolerance) {
             Unknowns unknowns = Unknowns.generateInitial(lambda,K,ll.g.getNodes(),ll.g.getFeatureDim());
             CircleSolver cslv=new CircleSolver(ll);
-            double previous_value=ll.NakedLogLikelihood(unknowns) + unknowns.getRegularization();;
+            double previous_value=ll.NakedLogLikelihood(unknowns) + unknowns.getRegularization(lambda);;
             double err=0;
             do {
                 Unknowns u1=cslv.findCircles(unknowns);
-                Unknowns u2=ProximalSolver.solve(u1, ll);
-                double after_value=ll.NakedLogLikelihood(u2) + u2.getRegularization();
+                Unknowns u2=ProximalSolver.solve(u1, ll,lambda);
+                double after_value=ll.NakedLogLikelihood(u2) + u2.getRegularization(lambda);
                 System.out.println("after="+after_value+",previous="+previous_value);
                 err=Math.abs(after_value-previous_value);
                 previous_value=after_value;

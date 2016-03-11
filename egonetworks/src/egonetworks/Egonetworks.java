@@ -17,6 +17,9 @@
  */
 package egonetworks;
 
+import solver.Egosolver;
+import solver.Unknowns;
+
 /**
  *
  * @author orbit
@@ -27,7 +30,30 @@ public class Egonetworks {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        String edgeFile="";
+        String featureFile="";
+        
+        FeatureGraph fg=Egoreader.userFeatureGraphReader(edgeFile,featureFile);
+        
+        LogLikelihood ll = new LogLikelihood(fg);
+        
+        Unknowns uknowns=Egosolver.solve(ll, 100, 10, 1e-6);
+        
+        boolean [][] circles=uknowns.getCircles();
+        
+        int circleNo=0;
+        for(boolean[] circle : circles){
+            System.out.println("Circle is "+circleNo+" and contains:");
+            circleNo++;
+            for(int node =0 ; node < circle.length; node++){
+                if(circle[node]){
+                    System.out.print(" "+node);
+                }
+            }
+            System.out.println("");
+        }
+
     }
 
 }
